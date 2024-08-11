@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { IUser } from "../interfaces/User.interface";
-
+import { CustomResponse } from "./responseMiddleware";
 interface CustomRequest extends Request {
   user?: IUser;
 }
@@ -31,15 +31,15 @@ export function authMiddleware(
   const token = req.headers.authorization?.split(" ")[1];
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET!, (err, user: any) => {
-      if (err)
-        return res.status(403).json({
-          success: false,
-          message: "Forbidden",
-        });
+      if (err) {
+        (res as CustomResponse).customError("Invalid token", 401);
+        return;
+      }
       req.user = user;
       next();
     });
   } else {
-    res.status(401).send("Unauthorized");
+    (res as CustomResponse).customError("Token not provided", 401);
+    return;
   }
 }
