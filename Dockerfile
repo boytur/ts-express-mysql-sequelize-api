@@ -1,23 +1,17 @@
-# Use the official Node.js image.
-FROM node:18
+FROM node:20
 
-# Set the working directory.
-WORKDIR /usr/src/app
+# Copy app files
+COPY . /express
+WORKDIR /express
 
-# Copy package.json and package-lock.json.
-COPY package*.json ./
-
-# Install dependencies.
+# Install app dependencies
 RUN npm install
 
-# Copy the rest of the application code.
-COPY . .
-
-# Build the TypeScript code.
+# Compile TypeScript to JavaScript
 RUN npm run build
 
-# Expose the application port.
+# Expose port
 EXPOSE 3000
 
-# Start the application.
-CMD ["node", "dist/index.js"]
+# Start app
+CMD ["node", "/express/dist/index.js"]
