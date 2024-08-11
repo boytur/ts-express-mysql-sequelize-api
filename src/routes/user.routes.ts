@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { authMiddleware } from "../middleware/auth.middleware";
-import { userValidationRules } from "../utils/validators";
+import { getUsersValidationRules, userValidationRules } from "../utils/validators";
 import { validate } from "../middleware/validate";
 
 const router = Router();
@@ -12,6 +12,13 @@ router.post(
   userValidationRules(),
   validate,
   userController.createUser
+);
+
+router.get(
+  "/users", 
+  getUsersValidationRules(), 
+  validate, 
+  userController.getUsers
 );
 
 export default router;

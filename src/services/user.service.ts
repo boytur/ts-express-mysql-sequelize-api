@@ -40,4 +40,16 @@ export class UserService {
     }
     return false;
   }
+
+  static async getUsers(limit: number, offset: number): Promise<User[]> {
+    return User.findAll({
+      limit,
+      offset,
+      attributes: { exclude: ["password"] },
+    }) || [];
+  }
+
+  static async getTotalUserCount(): Promise<number> {
+    return User.count();
+  }
 }

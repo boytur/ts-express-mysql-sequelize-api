@@ -39,13 +39,55 @@ export class UserController {
       }
 
       let user = await UserService.create(req.body);
+      let { password, ...userWithoutPassword } = user.toJSON();
 
       (res as CustomResponse).customSuccess(
-        user,
+        userWithoutPassword,
         201,
         "User created successfully"
       );
       return;
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  public async getUsers(req: Request, res: Response): Promise<void> {
+    try {
+      // Extract query parameters
+      let { perPage, page } = req.query;
+
+      // Parse and set default values for limit and page
+      const parsedLimit = perPage ? parseInt(perPage as string, 10) : 10;
+      const parsedPage = page ? parseInt(page as string, 10) : 1;
+      const parsedOffset = (parsedPage - 1) * parsedLimit;
+
+      // Fetch users using the UserService
+      const [users, totalCount] = await Promise.all([
+        UserService.getUsers(parsedLimit, parsedOffset),
+        UserService.getTotalUserCount(),
+      ]);
+
+      // Calculate pagination metadata
+      const totalPages = Math.ceil(totalCount / parsedLimit);
+
+      // Send a custom success response with metadata
+      (res as CustomResponse).customSuccess(
+        {
+          users: users,
+        },
+        200,
+        "Users retrieved successfully",
+        {
+          page: parsedPage,
+          perPage: parsedLimit,
+          totalCount: totalCount,
+          totalPages: totalPages,
+        }
+      );
     } catch (error: any) {
       res.status(500).json({
         success: false,
