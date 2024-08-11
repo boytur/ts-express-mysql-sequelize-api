@@ -48,10 +48,8 @@ export class UserController {
       );
       return;
     } catch (error: any) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      (res as CustomResponse).customError(error.message, 500);
+      return;
     }
   }
 
@@ -89,10 +87,8 @@ export class UserController {
         }
       );
     } catch (error: any) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      (res as CustomResponse).customError(error.message, 500);
+      return;
     }
   }
 }
