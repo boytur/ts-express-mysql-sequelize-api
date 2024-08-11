@@ -7,7 +7,7 @@ export const userValidationRules = () => [
 ];
 
 export const getUsersValidationRules = () => [
-  query('limit').optional().isInt().withMessage('Limit must be an integer'),
+  query('perPage').optional().isInt().withMessage('Perpage must be an integer'),
   query('offset').optional().isInt().withMessage('Offset must be an integer'),
   query('page').optional().isInt().withMessage('Page must be an integer'),
 ];
