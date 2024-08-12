@@ -5,14 +5,17 @@ import { sequelize } from './config/database.config';
 import { errorHandler } from './middleware/errorHandler';
 import dotenv from 'dotenv';
 import { responseMiddleware } from './middleware/responseMiddleware';
-
+import { User } from './models/user.model';
+import authRouter from './routes/auth.route';
+import cookieParser from'cookie-parser';
+import todoRoutes from  './routes/todo.routes';
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware for logging requests
 app.use(morgan('dev'));
+app.use(cookieParser());
 
 // Middleware for adding user to request
 app.use(responseMiddleware); 
@@ -22,6 +25,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api', userRoutes);
+app.use('/api', todoRoutes);
+app.use('/auth',authRouter);
 
 // Default route
 app.get('/', (req, res) => {

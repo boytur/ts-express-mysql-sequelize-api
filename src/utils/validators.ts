@@ -11,3 +11,8 @@ export const getUsersValidationRules = () => [
   query('offset').optional().isInt().withMessage('Offset must be an integer'),
   query('page').optional().isInt().withMessage('Page must be an integer'),
 ];
+
+export const loginValidateRules = () => [
+  body('email').isEmail().withMessage('Invalid email format'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+]
