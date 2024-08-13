@@ -20,6 +20,12 @@ export class Todo extends Model {
   public userId!: number;
 }
 
+export interface Todo {
+  id: number;
+  name: string;
+  userId: number;
+}
+
 Todo.init({
   id: {
     type: DataTypes.INTEGER,

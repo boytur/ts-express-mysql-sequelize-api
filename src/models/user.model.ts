@@ -17,6 +17,13 @@ export class User extends Model {
   public password!: string;
 }
 
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+}
+
 User.init({
   id: {
     type: DataTypes.INTEGER,

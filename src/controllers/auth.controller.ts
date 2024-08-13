@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { CustomResponse } from '../middleware/responseMiddleware';
 import { UserService } from '../services/user.service';
 import { comparePassword } from '../utils/encrypt';
-import { IUser } from '../interfaces/User.interface';
 import jwt from 'jsonwebtoken';
 
 

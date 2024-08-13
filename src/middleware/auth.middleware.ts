@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { IUser } from "../interfaces/User.interface";
 import { CustomResponse } from "./responseMiddleware";
+import { User } from "../models/user.model";
 
 interface CustomRequest extends Request {
-  user?: IUser;
+  user?: User;
 }
 
 /**

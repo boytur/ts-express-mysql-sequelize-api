@@ -5,7 +5,6 @@ import { sequelize } from './config/database.config';
 import { errorHandler } from './middleware/errorHandler';
 import dotenv from 'dotenv';
 import { responseMiddleware } from './middleware/responseMiddleware';
-import { User } from './models/user.model';
 import authRouter from './routes/auth.route';
 import cookieParser from'cookie-parser';
 import todoRoutes from  './routes/todo.routes';

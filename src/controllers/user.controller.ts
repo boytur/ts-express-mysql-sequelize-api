@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
 import { CustomResponse } from "../middleware/responseMiddleware";
-import { User } from "../models/user.model";
 
 /**
  * User controller class
